@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/6/21 11:11 AM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/6/21 11:11 AM
+  ~ */
+  -->
+
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/days_one</item>
+        <item>@font/montserrat</item>
+        <item>@font/montserrat_bold</item>
+    </array>
+</resources>

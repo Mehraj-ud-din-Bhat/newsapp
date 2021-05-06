@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/6/21 10:33 AM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/6/21 10:31 AM
+  ~ */
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WebView.WebView">
+
+</androidx.constraintlayout.widget.ConstraintLayout>

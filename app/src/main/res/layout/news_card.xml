@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    >
+
+    <ImageView
+        android:id="@+id/news_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@color/lime_color"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/newstimecountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_image"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="4dp"
+
+        android:fontFamily="@font/montserrat"
+        android:text="--"
+        android:textSize="10sp"
+        android:textColor="@android:color/holo_red_light">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/newsauthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newstimecountry"
+         android:layout_marginLeft="4dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="4dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Author Not Availble"
+        android:textSize="8sp"
+        android:textColor="@android:color/holo_red_light">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newsauthor"
+        android:fontFamily="@font/montserrat"
+        android:text="NEWS TITLE NOT AVailable"
+        android:layout_marginLeft="4dp"
+        android:textColor="@color/text_color">
+
+    </TextView>
+
+</RelativeLayout>

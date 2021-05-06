@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/6/21 11:44 AM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/6/21 11:44 AM
+  ~ */
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@color/blue_color"
+    >
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginLeft="6dp"
+       android:layout_marginTop="10dp"
+       android:fontFamily="@font/montserrat_bold"
+       android:text="Global News Network"
+       android:textColor="@color/white"
+       android:textSize="15sp"
+        />
+</RelativeLayout>
