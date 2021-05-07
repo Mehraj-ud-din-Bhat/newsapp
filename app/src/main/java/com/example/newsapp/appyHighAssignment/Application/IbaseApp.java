@@ -16,10 +16,7 @@ package com.example.newsapp.appyHighAssignment.Application;
 public interface IbaseApp {
     void showLoader();
     void hideLoader();
-    void showLoader(String msg);
-    void showDialog(String msg);
-    void hideDialog();
     void onError(String msg);
     void onSuccess();
-    void onSuccess(String msg);
+
 }

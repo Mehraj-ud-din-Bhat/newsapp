@@ -12,16 +12,14 @@
 <RelativeLayout
     android:layout_width="80dp"
     android:layout_height="80dp">
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/cat_image_id"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentTop="true"
-          android:layout_centerHorizontal="true"
+        android:layout_centerHorizontal="true"
+        />
 
-
-        android:src="@drawable/topnews" />
 
     <TextView
         android:id="@+id/cat_name_ids"
@@ -29,14 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/cat_image_id"
         android:layout_marginTop="2dp"
-     android:layout_centerHorizontal="true"
+       android:layout_centerHorizontal="true"
         android:fontFamily="@font/montserrat"
         android:gravity="center_horizontal"
-        android:padding="1dp"
         android:text="Headlines"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:textSize="9sp" />
+        android:textSize="10sp" />
 </RelativeLayout>
 
 

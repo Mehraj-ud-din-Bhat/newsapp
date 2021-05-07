@@ -19,7 +19,7 @@
        android:layout_height="wrap_content"
        android:layout_marginLeft="6dp"
        android:layout_marginTop="10dp"
-       android:fontFamily="@font/montserrat_bold"
+       android:fontFamily="@font/montserrat"
        android:text="Global News Network"
        android:textColor="@color/white"
        android:textSize="15sp"

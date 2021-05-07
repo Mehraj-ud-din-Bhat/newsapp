@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/7/21 10:39 AM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/7/21 10:39 AM
+  ~ */
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lime_color"
+    tools:context=".NewsByCategory.NewsByCategory">
+    <RelativeLayout
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+
+        android:layout_height="55dp"
+        android:background="@color/blue_color"
+
+        >
+       <ImageView
+           android:id="@+id/backIcon"
+           android:layout_marginLeft="10dp"
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:layout_marginTop="15dp"
+           android:src="@drawable/back_icon"
+           >
+
+       </ImageView>
+        <TextView
+            android:id="@+id/categoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/backIcon"
+            android:fontFamily="@font/montserrat"
+            android:text="Category Name"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsArticles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolBar"
+        android:background="#D2DFDFDF"
+        />
+    <include
+        android:id="@+id/loader"
+        layout="@layout/loader_layout"
+        android:layout_below="@+id/toolBar"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+</RelativeLayout>

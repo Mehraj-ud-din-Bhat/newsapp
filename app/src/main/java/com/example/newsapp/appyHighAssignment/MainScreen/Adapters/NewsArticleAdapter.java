@@ -1,6 +1,7 @@
 package com.example.newsapp.appyHighAssignment.MainScreen.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;
 import com.example.newsapp.appyHighAssignment.Util.Utility;
+import com.example.newsapp.appyHighAssignment.WebView.WebView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -74,14 +76,14 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<NewsArticleAdapter.
 
 
 
-//
-//        holder.root.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //String myJson = gson.toJson(products.get(position));
-//               // context.startActivity(new Intent(context, ProductDescription.class).putExtra("Product",myJson));
-//            }
-//        });
+
+        holder.root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String myJson = gson.toJson(products.get(position));
+               context.startActivity(new Intent(context, WebView.class).putExtra("newsUrl",newsArticleList.get(position).getUrl()));
+            }
+        });
 
 
     }
@@ -105,7 +107,7 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<NewsArticleAdapter.
 
         ViewHolder(View itemView) {
             super(itemView);
-            root=itemView.findViewById(R.id.catROOT);
+            root=itemView.findViewById(R.id.news_card_root);
             newsImage = itemView.findViewById(R.id.news_image);
             newsTitle = itemView.findViewById(R.id.news_title);
             newstime=itemView.findViewById(R.id.newstimecountry);

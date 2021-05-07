@@ -16,7 +16,6 @@ import java.util.List;
 public interface ImainScreenView  extends IbaseApp {
          void getTopHeadlines(String countryCode);
          void  onTopHeadlinesRecieved(List<NewsArticle> newsArticleList);
-         void  getLocationOfUser();
-         void onLocationRecieved();
+
 
 }

@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences;
 import com.example.newsapp.appyHighAssignment.Loaction.Country;
 import com.example.newsapp.appyHighAssignment.Loaction.Ilocation;
 import com.example.newsapp.appyHighAssignment.Loaction.Location;
@@ -50,7 +51,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
      MainScreenPresenter presenter;
      View loaderLayout;
      Location locationPresenter;
-
+     TextView newsCategoryName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,42 +71,32 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         recyclerViewnewsCategory=findViewById(R.id.newsCategory);
         recyclerViewNewsArticles=findViewById(R.id.newsArticles);
         loaderLayout=findViewById(R.id.loader);
+        newsCategoryName=findViewById(R.id.newsCategoryName);
         loaderLayout.setVisibility(View.VISIBLE);
         recyclerViewNewsArticles.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         NewsCategoryAdapter adapter=new NewsCategoryAdapter(this);
         recyclerViewnewsCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
         recyclerViewnewsCategory.setAdapter(adapter);
     }
 
 
     @Override
     public void showLoader() {
-
+        loaderLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoader() {
-
+        loaderLayout.setVisibility(View.GONE);
     }
 
-    @Override
-    public void showLoader(String msg) {
 
-    }
-
-    @Override
-    public void showDialog(String msg) {
-
-    }
-
-    @Override
-    public void hideDialog() {
-
-    }
 
     @Override
     public void onError(String msg) {
-
+        hideLoader();
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -113,10 +104,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
     }
 
-    @Override
-    public void onSuccess(String msg) {
 
-    }
 
     @Override
     public void getTopHeadlines(String countryCode) {
@@ -131,21 +119,15 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
       // Toast.makeText(this,"Recieved Data: "+newsArticleList.size(),Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void getLocationOfUser() {
-
-    }
-
-    @Override
-    public void onLocationRecieved() {
-
-    }
 
     @Override
     public void onLoactionRecieved(Country country) {
+
         if(country.name.isEmpty() && country.code.isEmpty())
         {
             //SET A DEFAULT COUNTRY BECAUSE DEVICE NOT WAS ABLE TO GET COUNTRY NAME
+            //ASK USER TO SELECT LOCATION
+
 
         }
 
@@ -154,6 +136,11 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
             CountryCode cc = CountryCode.getByCodeIgnoreCase(country.code);
             country.name=cc.getName();
         }
+
+        //STORE LOCATION FOR USE IN OTHE ACTIVITIES
+        ApplicationPreferences preferences=new ApplicationPreferences(this);
+        preferences.storeLocation(country);
+        newsCategoryName.setText("Headlines -"+country.name);
         presenter.getTopHeadlines(country.code.toLowerCase());
 
     }
@@ -164,11 +151,6 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
             // check if location is enabled
             if (isLocationEnabled()) {
-
-                // getting last
-                // location from
-                // FusedLocationClient
-                // object
                 locationPresenter.detectLoaction();
 
             } else {
@@ -187,7 +169,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
 
     //---------------------------------------------
-    //PERMISSIONS AREA
+    //PERMISSIONS AREA FOR LOACTION DETECTION
     //-----------------------------------------------
     int PERMISSION_ID = 44;
     // method to check for permissions
