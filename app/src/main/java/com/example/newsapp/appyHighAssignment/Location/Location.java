@@ -6,12 +6,10 @@
  * /
  */
 
-package com.example.newsapp.appyHighAssignment.Loaction;
+package com.example.newsapp.appyHighAssignment.Location;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Looper;
@@ -19,7 +17,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;

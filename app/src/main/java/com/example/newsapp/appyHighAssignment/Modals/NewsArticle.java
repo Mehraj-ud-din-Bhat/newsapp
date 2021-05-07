@@ -17,13 +17,13 @@ public class NewsArticle {
     private String description;
     private String  url;
     private String urlToImage;
-    private Date publishedAt;
+    private String publishedAt;
     private String content;
 
     public NewsArticle() {
     }
 
-    public NewsArticle(Source source, String author, String title, String description, String url, String urlToImage, Date publishedAt, String content) {
+    public NewsArticle(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         this.source = source;
         this.author = author;
         this.title = title;
@@ -83,11 +83,11 @@ public class NewsArticle {
         this.urlToImage = urlToImage;
     }
 
-    public Date getPublishedAt() {
+    public String getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
     }
 

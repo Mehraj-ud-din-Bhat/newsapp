@@ -7,18 +7,19 @@
  */
 
 plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
     id 'com.android.application'
     id 'com.google.gms.google-services'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.newsapp.appyHighAssignment"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -47,21 +48,34 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     /*Below Three dependencies are used for Retrofit-Client Access REST API's*/
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
     /*this is used for circle image */
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     /*this is used for Image Rendering from URL*/
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    //THIS IS USED FOR LOCATION DETECTIOn
+
+    //THIS IS USED FOR LOCATION DETECTIONS
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.neovisionaries:nv-i18n:1.22'
+
     //FOR ADMOB ADS
     implementation 'com.google.android.gms:play-services-ads:19.4.0'
+
+    //FOR PUSH NOTIFICATIONS FROM ONE SIGNAL
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+   //Contry Picker
+    implementation 'com.hbb20:ccp:1.7.1'
+
+
 
 
 
 
 }
+apply plugin: 'com.google.gms.google-services'

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences;
-import com.example.newsapp.appyHighAssignment.Loaction.Country;
+import com.example.newsapp.appyHighAssignment.Location.Country;
 import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;

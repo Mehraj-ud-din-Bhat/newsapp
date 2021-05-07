@@ -18,5 +18,4 @@ public interface IbaseApp {
     void hideLoader();
     void onError(String msg);
     void onSuccess();
-
 }

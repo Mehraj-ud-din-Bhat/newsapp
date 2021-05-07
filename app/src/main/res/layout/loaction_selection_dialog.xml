@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/7/21 11:07 PM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/7/21 11:07 PM
+  ~ */
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <RelativeLayout
+        android:id="@+id/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue_color"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Your Country"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="15dp"
+            android:textStyle="bold"
+           android:layout_centerInParent="true"
+            android:gravity="center"
+            ></TextView>
+
+    </RelativeLayout>
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:layout_below="@+id/heading_layout"
+        android:layout_weight="1"
+        app:showFullName="true"
+        app:hideNameCode="false"
+        android:layout_centerInParent="true"
+        android:background="@color/lime_color"
+        android:paddingStart="10dp" />
+
+</RelativeLayout>

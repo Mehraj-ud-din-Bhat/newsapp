@@ -24,7 +24,6 @@ public class WebView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         String url=getIntent().getStringExtra("newsUrl");
-
         webView=findViewById(R.id.webview);
         loader_layout=findViewById(R.id.loader_layout);
         loadWebView(url);
@@ -35,7 +34,7 @@ public class WebView extends AppCompatActivity {
     {
         webView.setVisibility(View.INVISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
-
+        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebChromeClient(new WebChromeClient() {
                     public void onProgressChanged(android.webkit.WebView view, int progress) {
                         if (progress == 100) {

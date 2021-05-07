@@ -10,6 +10,7 @@ package com.example.newsapp.appyHighAssignment.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +43,23 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     List<Object> newsArticleList;
     private LayoutInflater mInflater;
     private Context context;
-
     private static final int NEWS_ITEM_VIEW_TYPE = 0;
-
     private static final int UNIFIED_NATIVE_AD_VIEW_TYPE = 1;
 
     public NewsArticleAdapter(Context context, List<Object> newsArticleList) {
         mInflater=(LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
         this.newsArticleList=newsArticleList;
-         setAds();
+        if(newsArticleList.size()==0)
+        {
+            Toast.makeText(context,"Nothing found",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(newsArticleList.size()>2)
+        {
+            setAds();
+        }
+
     }
 
     // inflates the row layout from xml when needed
@@ -109,20 +117,21 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         ((NewsArticleView) holder).newsAuthor.setVisibility(View.GONE);
         ((NewsArticleView) holder).newsTitle.setText(article.getTitle());
-        if(article!=null )
+        if(article.getSource().getName()!=null )
         {
             ((NewsArticleView) holder).newsAuthor.setVisibility(View.VISIBLE);
             ((NewsArticleView) holder).newsAuthor.setText(article.getSource().getName());
         }
-        if(article.getSource()!=null)
+        if(article.getAuthor()!=null)
         {
-            ((NewsArticleView) holder).newsAuthor.setText(article.getSource().getName()+" | "+article.getAuthor());
+            ((NewsArticleView) holder).newsAuthor.setText(((NewsArticleView) holder).newsAuthor.getText()+" | "+article.getAuthor());
         }
 
         try {
             ((NewsArticleView) holder).newstime.setText(Utility.CustomDate.getTimeDetails(article.getPublishedAt().toString()));
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.e("time","error: "+e.getMessage());
         }
 
 

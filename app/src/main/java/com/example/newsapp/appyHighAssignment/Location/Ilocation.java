@@ -6,7 +6,7 @@
  * /
  */
 
-package com.example.newsapp.appyHighAssignment.Loaction;
+package com.example.newsapp.appyHighAssignment.Location;
 
 public interface Ilocation {
     void onLoactionRecieved(Country country);

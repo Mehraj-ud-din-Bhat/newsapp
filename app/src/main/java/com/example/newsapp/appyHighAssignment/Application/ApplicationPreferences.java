@@ -11,8 +11,7 @@ package com.example.newsapp.appyHighAssignment.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.newsapp.appyHighAssignment.Loaction.Country;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.example.newsapp.appyHighAssignment.Location.Country;
 import com.google.gson.Gson;
 
 public class ApplicationPreferences {

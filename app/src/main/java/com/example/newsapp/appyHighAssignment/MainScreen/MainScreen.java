@@ -22,17 +22,20 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences;
-import com.example.newsapp.appyHighAssignment.Loaction.Country;
-import com.example.newsapp.appyHighAssignment.Loaction.Ilocation;
-import com.example.newsapp.appyHighAssignment.Loaction.Location;
+import com.example.newsapp.appyHighAssignment.Location.Country;
+import com.example.newsapp.appyHighAssignment.Location.Ilocation;
+import com.example.newsapp.appyHighAssignment.Location.Location;
 import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
 import com.example.newsapp.appyHighAssignment.Adapters.NewsCategoryAdapter;
+import com.example.newsapp.appyHighAssignment.Location.ManualLoactonSelection.LocationSelectionDialog;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;
+import com.example.newsapp.appyHighAssignment.SearchNews.SearchNews;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -40,6 +43,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.neovisionaries.i18n.CountryCode;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +60,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
      View loaderLayout;
      Location locationPresenter;
      TextView newsCategoryName;
+     ImageView searchicon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +74,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         initViews();
         presenter=new MainScreenPresenter(this);
         locationPresenter=new Location(this,this);
-        getLastLocation();
+        getLocationOfUser();
 
 
 
@@ -81,8 +86,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         super.onResume();
         readRemoteConfig();
     }
-
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
 //METHOD USED TO CONNECT NEWS CATEGORY DASHBOARD AND SETUP RECYCLER VIEW
 //----------------------------------------------------------------------------
     void initViews()
@@ -91,11 +95,29 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         recyclerViewNewsArticles=findViewById(R.id.newsArticles);
         loaderLayout=findViewById(R.id.loader);
         newsCategoryName=findViewById(R.id.newsCategoryName);
+        searchicon=findViewById(R.id.search_icon);
         loaderLayout.setVisibility(View.VISIBLE);
         recyclerViewNewsArticles.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         NewsCategoryAdapter adapter=new NewsCategoryAdapter(this);
         recyclerViewnewsCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewnewsCategory.setAdapter(adapter);
+
+        searchicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, SearchNews.class));
+            }
+        });
+
+        newsCategoryName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationSelectionDialog dialog=new LocationSelectionDialog(MainScreen.this,MainScreen.this);
+                dialog.showDialog();
+            }
+        });
+
+
     }
 
 
@@ -148,6 +170,8 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         {
             //SET A DEFAULT COUNTRY BECAUSE DEVICE NOT WAS ABLE TO GET COUNTRY NAME
             //ASK USER TO SELECT LOCATION
+            LocationSelectionDialog dialog=new LocationSelectionDialog(this,this);
+            dialog.showDialog();
 
 
         }
@@ -155,18 +179,52 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         if(country.name.isEmpty() && country.code.length()>0)
         {
             CountryCode cc = CountryCode.getByCodeIgnoreCase(country.code);
+
             country.name=cc.getName();
+
         }
 
         //STORE LOCATION FOR USE IN OTHE ACTIVITIES
         ApplicationPreferences preferences=new ApplicationPreferences(this);
         preferences.storeLocation(country);
         newsCategoryName.setText("Headlines -"+country.name);
+        showLoader();
         presenter.getTopHeadlines(country.code.toLowerCase());
 
     }
 
-    void getLastLocation() {
+//--------------------------------------------------
+//READ REMOTE CONFIG TO DISPLAY ADS OR NOT
+//---------------------------------------------------
+    public  void readRemoteConfig()
+    {
+        FirebaseRemoteConfig mFirebaseRemoteConfig;
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
+
+        mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    mFirebaseRemoteConfig.activate();
+
+
+                }
+                }
+            });
+
+
+
+
+
+
+    }
+
+//--------------------------------------------------------------------------
+//METHOD USED TO GET LOCATION OF USER
+//----------------------------------------------------------------------------
+    void getLocationOfUser() {
         // check if permissions are given
         if (checkPermissions()) {
 
@@ -186,36 +244,6 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         }
 
     }
-    //--------------------------------------------------
-//READ REMOTE CONFIG TO DISPLAY ADS OR NOT
-//---------------------------------------------------
-    public  void readRemoteConfig()
-    {
-        FirebaseRemoteConfig mFirebaseRemoteConfig;
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
-
-        mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful())
-                {
-                    mFirebaseRemoteConfig.activate();
-
-                   // Toast.makeText(MainScreen.this, "Fetch Succeeded: "+adsEnabled, Toast.LENGTH_SHORT).show();
-                }
-                }
-            });
-
-
-
-
-
-
-    }
-
-
-
 
     //---------------------------------------------
     //PERMISSIONS AREA FOR LOACTION DETECTION
@@ -224,8 +252,6 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
     // method to check for permissions
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-
     }
 
     // method to request for permissions
@@ -250,7 +276,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
+                getLocationOfUser();
             }
         }
     }

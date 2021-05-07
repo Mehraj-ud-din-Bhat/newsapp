@@ -14,7 +14,7 @@ import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import java.util.List;
 
 public interface ImainScreenView  extends IbaseApp {
-         void getTopHeadlines(String countryCode);
+         void  getTopHeadlines(String countryCode);
          void  onTopHeadlinesRecieved(List<NewsArticle> newsArticleList);
 
 
