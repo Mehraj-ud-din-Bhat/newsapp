@@ -1,4 +1,12 @@
-package com.example.newsapp.appyHighAssignment.MainScreen.Adapters;
+/*
+ * Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
+ *  mehrajb33@gmail.com
+ * Copyright (c) 2021. All Rights Reserved
+ * LastModified 5/7/21 3:59 PM
+ * /
+ */
+
+package com.example.newsapp.appyHighAssignment.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-public class NewsCategoryAdapter extends RecyclerView.Adapter<NewsCategoryAdapter.ViewHolder> {
+public class NewsCategoryAdapter extends RecyclerView.Adapter<NewsCategoryAdapter.ViewHolder>  {
 
     ArrayList<Category> categories;
     private LayoutInflater mInflater;
@@ -73,6 +81,8 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<NewsCategoryAdapte
 
 
     }
+
+
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {

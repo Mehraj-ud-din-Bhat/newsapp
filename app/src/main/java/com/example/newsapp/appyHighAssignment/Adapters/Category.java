@@ -1,14 +1,12 @@
 /*
- * Created BY MEHRAJ UD DIN BHAT on 5/7/21 10:51 AM
+ * Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
  *  mehrajb33@gmail.com
  * Copyright (c) 2021. All Rights Reserved
- * LastModified 5/7/21 10:51 AM
+ * LastModified 5/7/21 3:59 PM
  * /
  */
 
-package com.example.newsapp.appyHighAssignment.MainScreen.Adapters;
-
-import java.util.ArrayList;
+package com.example.newsapp.appyHighAssignment.Adapters;
 
 public class Category {
         private  String name;

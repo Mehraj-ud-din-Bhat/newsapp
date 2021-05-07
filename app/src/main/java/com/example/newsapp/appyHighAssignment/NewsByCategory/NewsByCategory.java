@@ -1,8 +1,8 @@
 /*
- * Created BY MEHRAJ UD DIN BHAT on 5/7/21 10:39 AM
+ * Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
  *  mehrajb33@gmail.com
  * Copyright (c) 2021. All Rights Reserved
- * LastModified 5/7/21 10:39 AM
+ * LastModified 5/7/21 3:59 PM
  * /
  */
 
@@ -20,10 +20,11 @@ import android.widget.Toast;
 
 import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences;
 import com.example.newsapp.appyHighAssignment.Loaction.Country;
-import com.example.newsapp.appyHighAssignment.MainScreen.Adapters.NewsArticleAdapter;
+import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsByCategory extends AppCompatActivity implements InewsByCategory {
@@ -78,7 +79,8 @@ public class NewsByCategory extends AppCompatActivity implements InewsByCategory
     @Override
     public void onNewsRecieved(List<NewsArticle> list) {
         hideLoader();
-        NewsArticleAdapter adapter=new NewsArticleAdapter(this,list);
+        List<Object> newsList=new ArrayList<>(list);
+        NewsArticleAdapter adapter=new NewsArticleAdapter(this,newsList);
         recyclerViewNewsArticles.setAdapter(adapter);
     }
 

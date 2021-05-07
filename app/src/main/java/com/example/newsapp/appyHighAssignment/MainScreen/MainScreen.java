@@ -1,8 +1,8 @@
 /*
- * Created BY MEHRAJ UD DIN BHAT on 5/6/21 10:33 AM
+ * Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
  *  mehrajb33@gmail.com
  * Copyright (c) 2021. All Rights Reserved
- * LastModified 5/6/21 10:31 AM
+ * LastModified 5/7/21 3:59 PM
  * /
  */
 
@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.content.Context;
@@ -30,14 +29,19 @@ import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences
 import com.example.newsapp.appyHighAssignment.Loaction.Country;
 import com.example.newsapp.appyHighAssignment.Loaction.Ilocation;
 import com.example.newsapp.appyHighAssignment.Loaction.Location;
-import com.example.newsapp.appyHighAssignment.MainScreen.Adapters.NewsArticleAdapter;
-import com.example.newsapp.appyHighAssignment.MainScreen.Adapters.NewsCategoryAdapter;
+import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
+import com.example.newsapp.appyHighAssignment.Adapters.NewsCategoryAdapter;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.neovisionaries.i18n.CountryCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //--------------------------------------------------------------------
@@ -56,14 +60,29 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+        //INITILIZE ADMOB ADS
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         initViews();
         presenter=new MainScreenPresenter(this);
         locationPresenter=new Location(this,this);
         getLastLocation();
 
 
+
+
     }
-//--------------------------------------------------------------------------
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        readRemoteConfig();
+    }
+
+    //--------------------------------------------------------------------------
 //METHOD USED TO CONNECT NEWS CATEGORY DASHBOARD AND SETUP RECYCLER VIEW
 //----------------------------------------------------------------------------
     void initViews()
@@ -76,7 +95,6 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         recyclerViewNewsArticles.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         NewsCategoryAdapter adapter=new NewsCategoryAdapter(this);
         recyclerViewnewsCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         recyclerViewnewsCategory.setAdapter(adapter);
     }
 
@@ -113,9 +131,12 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
     @Override
     public void onTopHeadlinesRecieved(List<NewsArticle> newsArticleList) {
-        NewsArticleAdapter newsArticleAdapter=new NewsArticleAdapter(this,newsArticleList);
+        List<Object> list=new ArrayList<>(newsArticleList);
+        NewsArticleAdapter newsArticleAdapter=new NewsArticleAdapter(this,list);
         recyclerViewNewsArticles.setAdapter(newsArticleAdapter);
         loaderLayout.setVisibility(View.GONE);
+
+        //adapterWrapper = new AdmobRecyclerAdapterWrapper(this, testDevicesIds);
       // Toast.makeText(this,"Recieved Data: "+newsArticleList.size(),Toast.LENGTH_LONG).show();
     }
 
@@ -165,6 +186,34 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         }
 
     }
+    //--------------------------------------------------
+//READ REMOTE CONFIG TO DISPLAY ADS OR NOT
+//---------------------------------------------------
+    public  void readRemoteConfig()
+    {
+        FirebaseRemoteConfig mFirebaseRemoteConfig;
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
+
+        mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    mFirebaseRemoteConfig.activate();
+
+                   // Toast.makeText(MainScreen.this, "Fetch Succeeded: "+adsEnabled, Toast.LENGTH_SHORT).show();
+                }
+                }
+            });
+
+
+
+
+
+
+    }
+
 
 
 
@@ -205,4 +254,7 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
             }
         }
     }
+
+
+
 }

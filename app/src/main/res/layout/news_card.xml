@@ -1,3 +1,11 @@
+<!--
+  ~ /*Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
+  ~  mehrajb33@gmail.com
+  ~ Copyright (c) 2021. All Rights Reserved
+  ~ LastModified 5/7/21 1:45 AM
+  ~ */
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:id="@+id/news_card_root"
     android:layout_width="match_parent"
