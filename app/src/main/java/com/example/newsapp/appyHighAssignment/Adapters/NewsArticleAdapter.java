@@ -40,23 +40,21 @@ import java.util.List;
 
 
 public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int NEWS_ITEM_VIEW_TYPE = 0;
+    private static final int UNIFIED_NATIVE_AD_VIEW_TYPE = 1;
     List<Object> newsArticleList;
     private LayoutInflater mInflater;
     private Context context;
-    private static final int NEWS_ITEM_VIEW_TYPE = 0;
-    private static final int UNIFIED_NATIVE_AD_VIEW_TYPE = 1;
 
     public NewsArticleAdapter(Context context, List<Object> newsArticleList) {
-        mInflater=(LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
-        this.newsArticleList=newsArticleList;
-        if(newsArticleList.size()==0)
-        {
-            Toast.makeText(context,"Nothing found",Toast.LENGTH_LONG).show();
+        this.newsArticleList = newsArticleList;
+        if (newsArticleList.size() == 0) {
+            Toast.makeText(context, "Nothing found", Toast.LENGTH_LONG).show();
             return;
         }
-        if(newsArticleList.size()>2)
-        {
+        if (newsArticleList.size() > 2) {
             setAds();
         }
 
@@ -66,14 +64,14 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       // View view = mInflater.inflate(R.layout.news_card, parent, false);
+        // View view = mInflater.inflate(R.layout.news_card, parent, false);
 
         switch (viewType) {
             case UNIFIED_NATIVE_AD_VIEW_TYPE:
                 View unifiedNativeLayoutView = LayoutInflater.from(
                         parent.getContext()).inflate(R.layout.native_ad,
                         parent, false);
-                return new  UnifiedNativeAdViewHolder(unifiedNativeLayoutView);
+                return new UnifiedNativeAdViewHolder(unifiedNativeLayoutView);
             case NEWS_ITEM_VIEW_TYPE:
                 // Fall through.
             default:
@@ -97,61 +95,49 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case NEWS_ITEM_VIEW_TYPE:
                 // fall through
             default:
-                setNewsArticle(holder,position);
+                setNewsArticle(holder, position);
 
         }
-
-
-
-
 
 
     }
 
 
-
-    void setNewsArticle(RecyclerView.ViewHolder holder, int position)
-    {
-        holder=(NewsArticleView) holder;
-        NewsArticle article=(NewsArticle)newsArticleList.get(position);
+    void setNewsArticle(RecyclerView.ViewHolder holder, int position) {
+        holder = (NewsArticleView) holder;
+        NewsArticle article = (NewsArticle) newsArticleList.get(position);
 
         ((NewsArticleView) holder).newsAuthor.setVisibility(View.GONE);
         ((NewsArticleView) holder).newsTitle.setText(article.getTitle());
-        if(article.getSource().getName()!=null )
-        {
+        if (article.getSource().getName() != null) {
             ((NewsArticleView) holder).newsAuthor.setVisibility(View.VISIBLE);
             ((NewsArticleView) holder).newsAuthor.setText(article.getSource().getName());
         }
-        if(article.getAuthor()!=null)
-        {
-            ((NewsArticleView) holder).newsAuthor.setText(((NewsArticleView) holder).newsAuthor.getText()+" | "+article.getAuthor());
+        if (article.getAuthor() != null) {
+            ((NewsArticleView) holder).newsAuthor.setText(((NewsArticleView) holder).newsAuthor.getText() + " | " + article.getAuthor());
         }
 
         try {
             ((NewsArticleView) holder).newstime.setText(Utility.CustomDate.getTimeDetails(article.getPublishedAt().toString()));
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.e("time","error: "+e.getMessage());
+            Log.e("time", "error: " + e.getMessage());
         }
 
 
-
-        if(article.getUrlToImage()!=null)
-        {
+        if (article.getUrlToImage() != null) {
             Picasso.with(context).load(article.getUrlToImage()).into(((NewsArticleView) holder).newsImage);
-        }else {
+        } else {
             // IF IMAGE IS NOT AVAILABLE
             ((NewsArticleView) holder).newsImage.setVisibility(View.GONE);
         }
-
-
 
 
         ((NewsArticleView) holder).root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //String myJson = gson.toJson(products.get(position));
-                context.startActivity(new Intent(context, WebView.class).putExtra("newsUrl",article.getUrl()));
+                context.startActivity(new Intent(context, WebView.class).putExtra("newsUrl", article.getUrl()));
             }
         });
     }
@@ -208,7 +194,6 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
-
     @Override
     public int getItemCount() {
 
@@ -222,7 +207,7 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 
-        Object recyclerViewItem =newsArticleList.get(position);
+        Object recyclerViewItem = newsArticleList.get(position);
         if (recyclerViewItem instanceof UnifiedNativeAd) {
             return UNIFIED_NATIVE_AD_VIEW_TYPE;
         }
@@ -234,16 +219,15 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         FirebaseRemoteConfig mFirebaseRemoteConfig;
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         String adsEnabled = mFirebaseRemoteConfig.getString("adsEnabled");
-        Boolean value= Boolean.parseBoolean(adsEnabled);
+        Boolean value = Boolean.parseBoolean(adsEnabled);
 
 
-        if(value)
-        {
-            Toast.makeText(context,"Ads ARE Enabled",Toast.LENGTH_LONG).show();
-            new NativeAdManager(context,3,newsArticleList,this);
+        if (value) {
+            Toast.makeText(context, "Ads ARE Enabled", Toast.LENGTH_LONG).show();
+            new NativeAdManager(context, 3, newsArticleList, this);
             return;
         }
-        Toast.makeText(context,"Ads ARE not Enabled",Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Ads ARE not Enabled", Toast.LENGTH_LONG).show();
 
     }
 
@@ -254,17 +238,17 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class NewsArticleView extends RecyclerView.ViewHolder {
         ImageView newsImage;
-        TextView newsTitle,newstime,newsAuthor;
+        TextView newsTitle, newstime, newsAuthor;
 
         View root;
 
         NewsArticleView(View itemView) {
             super(itemView);
-            root=itemView.findViewById(R.id.news_card_root);
+            root = itemView.findViewById(R.id.news_card_root);
             newsImage = itemView.findViewById(R.id.news_image);
             newsTitle = itemView.findViewById(R.id.news_title);
-            newstime=itemView.findViewById(R.id.newstimecountry);
-            newsAuthor=itemView.findViewById(R.id.newsauthor);
+            newstime = itemView.findViewById(R.id.newstimecountry);
+            newsAuthor = itemView.findViewById(R.id.newsauthor);
 
 
         }
@@ -275,10 +259,6 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class UnifiedNativeAdViewHolder extends RecyclerView.ViewHolder {
 
         private UnifiedNativeAdView adView;
-
-        public UnifiedNativeAdView getAdView() {
-            return adView;
-        }
 
         UnifiedNativeAdViewHolder(View view) {
             super(view);
@@ -298,14 +278,11 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             adView.setStoreView(adView.findViewById(R.id.ad_store));
             adView.setAdvertiserView(adView.findViewById(R.id.ad_advertiser));
         }
+
+        public UnifiedNativeAdView getAdView() {
+            return adView;
+        }
     }
-
-
-
-
-
-
-
 
 
 }

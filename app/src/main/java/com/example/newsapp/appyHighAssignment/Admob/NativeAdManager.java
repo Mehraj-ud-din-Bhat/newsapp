@@ -17,24 +17,26 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+//---------------------------------------
+//THIS CLASS DEALS WITH ADMOB NATIVE ADS
+//--------------------------------------
 public class NativeAdManager {
-        Context context;
-        int NUMBER_OF_ADS;
-        List<Object> newsArticles;
-        List<UnifiedNativeAd> nativeAds;
-       private AdLoader adLoader;
-       NewsArticleAdapter adapter;
+    Context context;
+    int NUMBER_OF_ADS;
+    List<Object> newsArticles;
+    List<UnifiedNativeAd> nativeAds;
+    NewsArticleAdapter adapter;
+    private AdLoader adLoader;
 
-    public NativeAdManager(Context context, int NUMBER_OF_ADS, List<Object> newsArticles,NewsArticleAdapter articleAdapter) {
+    public NativeAdManager(Context context, int NUMBER_OF_ADS, List<Object> newsArticles, NewsArticleAdapter articleAdapter) {
         this.context = context;
         this.NUMBER_OF_ADS = NUMBER_OF_ADS;
         this.newsArticles = newsArticles;
-        nativeAds=new ArrayList<>();
-        this.adapter=articleAdapter;
+        nativeAds = new ArrayList<>();
+        this.adapter = articleAdapter;
         loadNativeAds();
     }
 
@@ -61,7 +63,7 @@ public class NativeAdManager {
                         // and if so, insert the ads into the list.
 
                         if (!adLoader.isLoading()) {
-                          insertNativeAdsInNewsArticles();
+                            insertNativeAdsInNewsArticles();
                         }
                     }
                 }).build();
@@ -71,8 +73,7 @@ public class NativeAdManager {
     }
 
 
-    void insertNativeAdsInNewsArticles()
-    {
+    void insertNativeAdsInNewsArticles() {
         if (nativeAds.size() <= 0) {
             return;
         }

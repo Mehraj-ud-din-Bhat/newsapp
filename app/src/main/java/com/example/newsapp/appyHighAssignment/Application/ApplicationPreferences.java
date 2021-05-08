@@ -15,14 +15,13 @@ import com.example.newsapp.appyHighAssignment.Location.Country;
 import com.google.gson.Gson;
 
 public class ApplicationPreferences {
-       Context context;
+    Context context;
 
     public ApplicationPreferences(Context context) {
         this.context = context;
     }
 
-    public   void storeLocation(Country country)
-    {
+    public void storeLocation(Country country) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("mPref", 0);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         final Gson gson = new Gson();
@@ -32,29 +31,16 @@ public class ApplicationPreferences {
 
     }
 
- public  Country getStoredLocation()
- {
-     Country country;
-     SharedPreferences sharedPreferences = context.getSharedPreferences("mPref", 0);
-     if (sharedPreferences.contains("location")) {
-         final Gson gson = new Gson();
-      return  gson.fromJson(sharedPreferences.getString("location", ""), Country.class);
-     }
+    public Country getStoredLocation() {
+        Country country;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("mPref", 0);
+        if (sharedPreferences.contains("location")) {
+            final Gson gson = new Gson();
+            return gson.fromJson(sharedPreferences.getString("location", ""), Country.class);
+        }
 
-     return  null;
- }
-
-
-
-
-
-
-
-
-
-
-
-
+        return null;
+    }
 
 
 }

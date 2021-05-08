@@ -8,12 +8,6 @@
 
 package com.example.newsapp.appyHighAssignment.MainScreen;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -26,12 +20,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
+import com.example.newsapp.appyHighAssignment.Adapters.NewsCategoryAdapter;
 import com.example.newsapp.appyHighAssignment.Application.ApplicationPreferences;
 import com.example.newsapp.appyHighAssignment.Location.Country;
 import com.example.newsapp.appyHighAssignment.Location.Ilocation;
 import com.example.newsapp.appyHighAssignment.Location.Location;
-import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
-import com.example.newsapp.appyHighAssignment.Adapters.NewsCategoryAdapter;
 import com.example.newsapp.appyHighAssignment.Location.ManualLoactonSelection.LocationSelectionDialog;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.R;
@@ -43,7 +43,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.neovisionaries.i18n.CountryCode;
-import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +54,16 @@ import java.util.List;
 
 public class MainScreen extends AppCompatActivity implements ImainScreenView, Ilocation {
 
-    RecyclerView recyclerViewnewsCategory,recyclerViewNewsArticles;
-     MainScreenPresenter presenter;
-     View loaderLayout;
-     Location locationPresenter;
-     TextView newsCategoryName;
-     ImageView searchicon;
+    RecyclerView recyclerViewnewsCategory, recyclerViewNewsArticles;
+    MainScreenPresenter presenter;
+    View loaderLayout;
+    Location locationPresenter;
+    TextView newsCategoryName;
+    ImageView searchicon;
+
+
+    int PERMISSION_ID = 44;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +75,9 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
             }
         });
         initViews();
-        presenter=new MainScreenPresenter(this);
-        locationPresenter=new Location(this,this);
+        presenter = new MainScreenPresenter(this);
+        locationPresenter = new Location(this, this);
         getLocationOfUser();
-
-
 
 
     }
@@ -86,19 +87,19 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         super.onResume();
         readRemoteConfig();
     }
-//--------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------
 //METHOD USED TO CONNECT NEWS CATEGORY DASHBOARD AND SETUP RECYCLER VIEW
 //----------------------------------------------------------------------------
-    void initViews()
-    {
-        recyclerViewnewsCategory=findViewById(R.id.newsCategory);
-        recyclerViewNewsArticles=findViewById(R.id.newsArticles);
-        loaderLayout=findViewById(R.id.loader);
-        newsCategoryName=findViewById(R.id.newsCategoryName);
-        searchicon=findViewById(R.id.search_icon);
+    void initViews() {
+        recyclerViewnewsCategory = findViewById(R.id.newsCategory);
+        recyclerViewNewsArticles = findViewById(R.id.newsArticles);
+        loaderLayout = findViewById(R.id.loader);
+        newsCategoryName = findViewById(R.id.newsCategoryName);
+        searchicon = findViewById(R.id.search_icon);
         loaderLayout.setVisibility(View.VISIBLE);
         recyclerViewNewsArticles.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        NewsCategoryAdapter adapter=new NewsCategoryAdapter(this);
+        NewsCategoryAdapter adapter = new NewsCategoryAdapter(this);
         recyclerViewnewsCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewnewsCategory.setAdapter(adapter);
 
@@ -112,14 +113,13 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         newsCategoryName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationSelectionDialog dialog=new LocationSelectionDialog(MainScreen.this,MainScreen.this);
+                LocationSelectionDialog dialog = new LocationSelectionDialog(MainScreen.this, MainScreen.this);
                 dialog.showDialog();
             }
         });
 
 
     }
-
 
     @Override
     public void showLoader() {
@@ -131,20 +131,16 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         loaderLayout.setVisibility(View.GONE);
     }
 
-
-
     @Override
     public void onError(String msg) {
         hideLoader();
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onSuccess() {
 
     }
-
-
 
     @Override
     public void getTopHeadlines(String countryCode) {
@@ -153,51 +149,47 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
 
     @Override
     public void onTopHeadlinesRecieved(List<NewsArticle> newsArticleList) {
-        List<Object> list=new ArrayList<>(newsArticleList);
-        NewsArticleAdapter newsArticleAdapter=new NewsArticleAdapter(this,list);
+        List<Object> list = new ArrayList<>(newsArticleList);
+        NewsArticleAdapter newsArticleAdapter = new NewsArticleAdapter(this, list);
         recyclerViewNewsArticles.setAdapter(newsArticleAdapter);
         loaderLayout.setVisibility(View.GONE);
 
         //adapterWrapper = new AdmobRecyclerAdapterWrapper(this, testDevicesIds);
-      // Toast.makeText(this,"Recieved Data: "+newsArticleList.size(),Toast.LENGTH_LONG).show();
+        // Toast.makeText(this,"Recieved Data: "+newsArticleList.size(),Toast.LENGTH_LONG).show();
     }
-
 
     @Override
     public void onLoactionRecieved(Country country) {
 
-        if(country.name.isEmpty() && country.code.isEmpty())
-        {
+        if (country.name.isEmpty() && country.code.isEmpty()) {
             //SET A DEFAULT COUNTRY BECAUSE DEVICE NOT WAS ABLE TO GET COUNTRY NAME
             //ASK USER TO SELECT LOCATION
-            LocationSelectionDialog dialog=new LocationSelectionDialog(this,this);
+            LocationSelectionDialog dialog = new LocationSelectionDialog(this, this);
             dialog.showDialog();
 
 
         }
 
-        if(country.name.isEmpty() && country.code.length()>0)
-        {
+        if (country.name.isEmpty() && country.code.length() > 0) {
             CountryCode cc = CountryCode.getByCodeIgnoreCase(country.code);
 
-            country.name=cc.getName();
+            country.name = cc.getName();
 
         }
 
         //STORE LOCATION FOR USE IN OTHE ACTIVITIES
-        ApplicationPreferences preferences=new ApplicationPreferences(this);
+        ApplicationPreferences preferences = new ApplicationPreferences(this);
         preferences.storeLocation(country);
-        newsCategoryName.setText("Headlines -"+country.name);
+        newsCategoryName.setText("Headlines -" + country.name);
         showLoader();
         presenter.getTopHeadlines(country.code.toLowerCase());
 
     }
 
-//--------------------------------------------------
+    //--------------------------------------------------
 //READ REMOTE CONFIG TO DISPLAY ADS OR NOT
 //---------------------------------------------------
-    public  void readRemoteConfig()
-    {
+    public void readRemoteConfig() {
         FirebaseRemoteConfig mFirebaseRemoteConfig;
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
@@ -205,23 +197,18 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     mFirebaseRemoteConfig.activate();
 
 
                 }
-                }
-            });
-
-
-
-
+            }
+        });
 
 
     }
 
-//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 //METHOD USED TO GET LOCATION OF USER
 //----------------------------------------------------------------------------
     void getLocationOfUser() {
@@ -244,11 +231,9 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
         }
 
     }
-
     //---------------------------------------------
     //PERMISSIONS AREA FOR LOACTION DETECTION
     //-----------------------------------------------
-    int PERMISSION_ID = 44;
     // method to check for permissions
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -280,7 +265,6 @@ public class MainScreen extends AppCompatActivity implements ImainScreenView, Il
             }
         }
     }
-
 
 
 }

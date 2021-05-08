@@ -8,14 +8,10 @@
 
 package com.example.newsapp.appyHighAssignment.API;
 
-import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticleResponse;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-
 import retrofit2.http.Url;
 //------------------------------------------------------
 //Contains All API Methods
@@ -23,10 +19,10 @@ import retrofit2.http.Url;
 
 
 public interface UserService {
-   //---------------------
-   //GET THE NEWS  FEED
-   //------------------------
-   @GET
-   Call<NewsArticleResponse> getNewsFeed(@Url String url);
+    //---------------------
+    //GET THE NEWS  FEED
+    //------------------------
+    @GET
+    Call<NewsArticleResponse> getNewsFeed(@Url String url);
 }
 

@@ -11,14 +11,16 @@ package com.example.newsapp.appyHighAssignment.API;
 
 public class APIUtility {
     //BASE URL OF NEWS API
-   public static final String API_URL = "https://newsapi.org/v2/";
-   public  static final String API_KEY="28a87b70255143128bea8d58d836fd07";
-    private APIUtility(){
+    public static final String API_URL = "https://newsapi.org/v2/";
+    public static final String API_KEY = "28a87b70255143128bea8d58d836fd07";
+
+    private APIUtility() {
     }
-        //-----------------------------------
-       // Returns Retrofit Client
-      // -------------------------------------
-        public static UserService getUserService(){
+
+    //-----------------------------------
+    // Returns Retrofit Client
+    // -------------------------------------
+    public static UserService getUserService() {
         return RetrofitClinet.getclient(API_URL).create(UserService.class);
     }
 }

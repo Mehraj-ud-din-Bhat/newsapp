@@ -9,7 +9,7 @@
 package com.example.newsapp.appyHighAssignment.Modals;
 
 public class Source {
-    private  int Id;
+    private int Id;
     private String name;
 
     public Source() {

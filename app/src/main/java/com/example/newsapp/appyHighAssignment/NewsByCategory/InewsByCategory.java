@@ -14,7 +14,8 @@ import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import java.util.List;
 
 public interface InewsByCategory extends IbaseApp {
-     void getNewsByCategory(String category);
-     void onNewsRecieved(List<NewsArticle> list);
+    void getNewsByCategory(String category);
+
+    void onNewsRecieved(List<NewsArticle> list);
 
 }

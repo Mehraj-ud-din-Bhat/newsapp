@@ -9,7 +9,6 @@
 package com.example.newsapp.appyHighAssignment.SearchNews;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.newsapp.appyHighAssignment.API.APIUtility;
 import com.example.newsapp.appyHighAssignment.API.UserService;
@@ -29,18 +28,17 @@ public class SearchPresenter {
     }
 
 
-    public  void searchNews(String searchText)
-    {
+    public void searchNews(String searchText) {
 
-        UserService mUtil =  APIUtility.getUserService();
-        Call<NewsArticleResponse> apiCall= mUtil.getNewsFeed(APIUtility.API_URL+"/everything?q="+searchText+"&apiKey="+APIUtility.API_KEY);
+        UserService mUtil = APIUtility.getUserService();
+        Call<NewsArticleResponse> apiCall = mUtil.getNewsFeed(APIUtility.API_URL + "/everything?q=" + searchText + "&apiKey=" + APIUtility.API_KEY);
         apiCall.enqueue(new Callback<NewsArticleResponse>() {
             @Override
             public void onResponse(Call<NewsArticleResponse> call, Response<NewsArticleResponse> response) {
-               // Log.e(TAG,"RESPONSE: "+response.message());
-                if(response.body()!=null) {
+                // Log.e(TAG,"RESPONSE: "+response.message());
+                if (response.body() != null) {
                     view.onSearchResult(response.body().getArticles());
-                }else {
+                } else {
                     view.onError("Something went wrong");
                 }
 
@@ -48,7 +46,7 @@ public class SearchPresenter {
 
             @Override
             public void onFailure(Call<NewsArticleResponse> call, Throwable t) {
-               // Log.e(TAG,"Error: "+t.getMessage());
+                // Log.e(TAG,"Error: "+t.getMessage());
                 view.onError("Something went wrong!");
             }
         });

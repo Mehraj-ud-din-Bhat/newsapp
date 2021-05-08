@@ -8,14 +8,12 @@
 
 package com.example.newsapp.appyHighAssignment.Modals;
 
-import java.util.Date;
-
 public class NewsArticle {
-    private  Source source;
+    private Source source;
     private String author;
     private String title;
     private String description;
-    private String  url;
+    private String url;
     private String urlToImage;
     private String publishedAt;
     private String content;

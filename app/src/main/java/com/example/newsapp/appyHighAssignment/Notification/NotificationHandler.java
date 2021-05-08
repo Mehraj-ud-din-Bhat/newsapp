@@ -33,7 +33,7 @@ public class NotificationHandler implements OneSignal.OSNotificationOpenedHandle
     public void notificationOpened(OSNotificationOpenedResult result) {
         OSNotificationAction.ActionType actionType = result.getAction().getType();
         JSONObject data = result.getNotification().getAdditionalData();
-        String customKey="";
+        String customKey = "";
 
         if (data != null) {
             customKey = data.optString("url", null);
@@ -43,11 +43,11 @@ public class NotificationHandler implements OneSignal.OSNotificationOpenedHandle
 
         if (actionType == OSNotificationAction.ActionType.ActionTaken)
             Log.i("OneSignalExample", "Button pressed with id: " + result.getAction().getActionId());
-         if(!customKey.isEmpty()) {
-             Intent intent = new Intent(context, WebView.class);
-             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-             intent.putExtra("newsUrl", customKey);
-             context.startActivity(intent);
-         }
+        if (!customKey.isEmpty()) {
+            Intent intent = new Intent(context, WebView.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("newsUrl", customKey);
+            context.startActivity(intent);
+        }
     }
 }

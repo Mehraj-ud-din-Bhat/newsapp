@@ -69,12 +69,8 @@ dependencies {
 
     //FOR PUSH NOTIFICATIONS FROM ONE SIGNAL
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
-   //Contry Picker
+    //Contry Picker
     implementation 'com.hbb20:ccp:1.7.1'
-
-
-
-
 
 
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*Created BY MEHRAJ UD DIN BHAT on 5/7/21 4:07 PM
   ~  mehrajb33@gmail.com
   ~ Copyright (c) 2021. All Rights Reserved
@@ -8,17 +7,18 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_color"
     tools:context=".WebView.WebView">
-<include
-    android:id="@+id/loader_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    layout="@layout/loader_layout"/>
+
+    <include
+        android:id="@+id/loader_layout"
+        layout="@layout/loader_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"

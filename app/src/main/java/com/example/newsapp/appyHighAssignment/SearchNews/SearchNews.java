@@ -8,16 +8,16 @@
 
 package com.example.newsapp.appyHighAssignment.SearchNews;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.appyHighAssignment.Adapters.NewsArticleAdapter;
 import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
@@ -35,30 +35,28 @@ public class SearchNews extends AppCompatActivity implements ISearchNews {
     RelativeLayout toolBar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_news);
-        etSearch=findViewById(R.id.search_EditText);
-        searchButton=findViewById(R.id.search_button);
-        presenter=new SearchPresenter(this,this);
-        rvNewsArticles=findViewById(R.id.rvSearchNewsArticles);
-        loader=findViewById(R.id.loadingBar);
+        etSearch = findViewById(R.id.search_EditText);
+        searchButton = findViewById(R.id.search_button);
+        presenter = new SearchPresenter(this, this);
+        rvNewsArticles = findViewById(R.id.rvSearchNewsArticles);
+        loader = findViewById(R.id.loadingBar);
         loader.setVisibility(View.GONE);
-        toolBar=findViewById(R.id.toolBarRootConatiner);
+        toolBar = findViewById(R.id.toolBarRootConatiner);
         rvNewsArticles.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(etSearch.getText().toString().isEmpty())
-                {
+                if (etSearch.getText().toString().isEmpty()) {
                     etSearch.setError("required");
                     return;
                 }
 
-                 showLoader();
+                showLoader();
 
                 presenter.searchNews(etSearch.getText().toString());
 
@@ -69,15 +67,14 @@ public class SearchNews extends AppCompatActivity implements ISearchNews {
 
     @Override
     public void onSearchResult(List<NewsArticle> list) {
-         hideLoader();
-         if(list.size()<=0)
-         {
-             onError("Nothing found..");
-             return;
-         }
+        hideLoader();
+        if (list.size() <= 0) {
+            onError("Nothing found..");
+            return;
+        }
 
-         List<Object> newsList=new ArrayList<>(list);
-        NewsArticleAdapter adapter=new NewsArticleAdapter(this,newsList);
+        List<Object> newsList = new ArrayList<>(list);
+        NewsArticleAdapter adapter = new NewsArticleAdapter(this, newsList);
         rvNewsArticles.setAdapter(adapter);
 
     }
@@ -99,7 +96,7 @@ public class SearchNews extends AppCompatActivity implements ISearchNews {
     @Override
     public void onError(String msg) {
         findViewById(R.id.nothingFoundView).setVisibility(View.VISIBLE);
-        TextView tv=findViewById(R.id.nothingFoundText);
+        TextView tv = findViewById(R.id.nothingFoundText);
         tv.setText(msg);
     }
 

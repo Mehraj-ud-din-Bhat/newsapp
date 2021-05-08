@@ -12,7 +12,7 @@ import java.util.List;
 
 public class NewsArticleResponse {
     private String status;
-    private  int totalResults;
+    private int totalResults;
     private List<NewsArticle> articles;
 
     public NewsArticleResponse(String status, int totalResults, List<NewsArticle> articles) {

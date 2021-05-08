@@ -14,5 +14,5 @@ import com.example.newsapp.appyHighAssignment.Modals.NewsArticle;
 import java.util.List;
 
 public interface ISearchNews extends IbaseApp {
-       void onSearchResult(List<NewsArticle> list);
+    void onSearchResult(List<NewsArticle> list);
 }

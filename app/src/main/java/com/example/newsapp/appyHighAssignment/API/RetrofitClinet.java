@@ -17,16 +17,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClinet {
     private static Retrofit retrofit;
-    public static Retrofit getclient(String url){
+
+    public static Retrofit getclient(String url) {
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(25, TimeUnit.SECONDS)
                 .writeTimeout(25, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
-        if(retrofit==null){
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder().baseUrl(url)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         }
         return retrofit;
     }

@@ -8,11 +8,11 @@
 
 package com.example.newsapp.appyHighAssignment.SplashScreen;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newsapp.appyHighAssignment.MainScreen.MainScreen;
 import com.example.newsapp.appyHighAssignment.R;
